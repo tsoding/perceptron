@@ -57,15 +57,6 @@ void layer_fill_circle(Layer layer, int cx, int cy, int r, float value)
 
 void layer_save_as_ppm(Layer layer, const char *file_path)
 {
-    float min = FLT_MAX;
-    float max = FLT_MIN;
-    for (int y = 0; y < HEIGHT-1; ++y) {
-        for (int x = 0; x < WIDTH-1; ++x) {
-            if (layer[y][x] < min) min = layer[y][x];
-            if (layer[y][x] > max) max = layer[y][x];
-        }
-    }
-
     FILE *f = fopen(file_path, "wb");
     if (f == NULL) {
         fprintf(stderr, "ERROR: could not open file %s: %m\n",
@@ -77,11 +68,11 @@ void layer_save_as_ppm(Layer layer, const char *file_path)
 
     for (int y = 0; y < HEIGHT * PPM_SCALER; ++y) {
         for (int x = 0; x < WIDTH * PPM_SCALER; ++x) {
-            float s = (layer[y / PPM_SCALER][x / PPM_SCALER] - min) / (max - min);
+            float s = (layer[y / PPM_SCALER][x / PPM_SCALER] + PPM_RANGE) / (2.0f * PPM_RANGE);
             char pixel[3] = {
                 (char) floorf(PPM_COLOR_INTENSITY * (1.0f - s)),
+                (char) floorf(PPM_COLOR_INTENSITY * (1.0f - s)),
                 (char) floorf(PPM_COLOR_INTENSITY * s),
-                0,
             };
 
             fwrite(pixel, sizeof(pixel), 1, f);
