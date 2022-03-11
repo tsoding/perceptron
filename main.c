@@ -101,6 +101,8 @@ void layer_save_as_bin(Layer layer, const char *file_path)
 
 void layer_load_from_bin(Layer layer, const char *file_path)
 {
+    (void) layer;
+    (void) file_path;
     assert(0 && "TODO: layer_load_from_bin is not implemented yet!");
 }
 
