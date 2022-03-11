@@ -8,12 +8,7 @@
 #include <limits.h>
 #include <float.h>
 
-#define WIDTH 50
-#define HEIGHT 50
-#define PPM_SCALER 25
-#define BIAS 10.0
-#define SAMPLE_SIZE 2000
-#define TRAIN_PASSES 2000
+#include "./config.h"
 
 typedef float Layer[HEIGHT][WIDTH];
 
